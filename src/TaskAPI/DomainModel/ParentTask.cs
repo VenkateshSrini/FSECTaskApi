@@ -11,9 +11,10 @@ namespace TaskAPI.DomainModel
     public class ParentTask
     {
         [Key]
-        [Column("parent_id", TypeName ="serial") ]
+        [Column("parent_id", TypeName = "integer") ]
         public int Parent_ID { get; set; }
-        [Column("parent_task", TypeName = "varchar(100)")]
-        public string Parent_Task { get; set; }
+        [Column("parent_task", TypeName = "int")]
+        public int Parent_Task { get; set; }
+        public List<Tasks> Tasks { get; set; }
     }
 }

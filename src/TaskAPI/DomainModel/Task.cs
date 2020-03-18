@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace TaskAPI.DomainModel
 {
     [Table("tasks")]
-    public class Task
+    public class Tasks
     {
-        [Column("task_id", TypeName ="serial")]
+        [Column("task_id", TypeName = "integer")]
         [Key]
         public int TaskId { get; set; }
         [Column("task",TypeName ="varchar(40)")]
@@ -21,6 +21,10 @@ namespace TaskAPI.DomainModel
         public DateTime EndDate { get; set; }
         [Column("parent_id",TypeName ="integer")]
         public int ParentTaskId { get; set; }
+        [Column("priority",TypeName ="integer")]
+        public int Priortiy { get; set; }
+        [Column("status", TypeName ="int")]
+        public int Status { get; set; }
         [ForeignKey("ParentTaskId")]
         public ParentTask ParentTask { get; set; }
     }

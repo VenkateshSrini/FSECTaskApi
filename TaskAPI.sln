@@ -7,7 +7,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9DA40C81-84C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7F28DF2F-56B3-48BC-97ED-4A24EF810B7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskAPI", "src\TaskAPI\TaskAPI.csproj", "{67E20310-147D-4AAE-A45F-A13EFC225354}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskAPI", "src\TaskAPI\TaskAPI.csproj", "{67E20310-147D-4AAE-A45F-A13EFC225354}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskApi.Unit.Test", "test\TaskApi.Unit.Test\TaskApi.Unit.Test.csproj", "{7BFFFDB0-937F-4A7F-ACF6-2CF826832AFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLScripts", "SQLScripts", "{896CFFCF-2E80-4CF2-8290-0752171133C4}"
+	ProjectSection(SolutionItems) = preProject
+		src\TaskAPI\CreateScripts.SQL = src\TaskAPI\CreateScripts.SQL
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,12 +26,17 @@ Global
 		{67E20310-147D-4AAE-A45F-A13EFC225354}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67E20310-147D-4AAE-A45F-A13EFC225354}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67E20310-147D-4AAE-A45F-A13EFC225354}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BFFFDB0-937F-4A7F-ACF6-2CF826832AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BFFFDB0-937F-4A7F-ACF6-2CF826832AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BFFFDB0-937F-4A7F-ACF6-2CF826832AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BFFFDB0-937F-4A7F-ACF6-2CF826832AFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{67E20310-147D-4AAE-A45F-A13EFC225354} = {9DA40C81-84C2-4C6F-8C20-53493A15AB15}
+		{7BFFFDB0-937F-4A7F-ACF6-2CF826832AFD} = {7F28DF2F-56B3-48BC-97ED-4A24EF810B7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {359A0939-BBA3-4503-BD4D-BF8852382378}
