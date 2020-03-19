@@ -10,8 +10,9 @@ namespace TaskAPI.DomainModel
     [ExcludeFromCodeCoverage]
     public class TaskContext:DbContext
     {
-        public DbSet<ParentTask> ParentTasks { get; set; }
-        public DbSet<Tasks> Tasks { get; set; }
+        public virtual DbSet<ParentTask> ParentTasks { get; set; }
+        public virtual DbSet<Tasks> Tasks { get; set; }
+        
         public TaskContext(DbContextOptions<TaskContext> contextOptions)
            : base(contextOptions)
         {
