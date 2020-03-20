@@ -11,5 +11,7 @@ namespace TaskAPI.Repository
     {
         List<Tasks> GetTaskForAllCriteria(SearchMsg searchMsg);
         List<Tasks> GetTaskForAnyCriteria(SearchMsg searchMsg);
+        Task<bool> AddTask(Tasks tasks);
+        Task<bool> EditTask(Tasks tasks);
     }
 }

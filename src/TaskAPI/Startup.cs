@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using TaskAPI.DomainModel;
+using TaskAPI.Repository;
 
 namespace TaskAPI
 {
@@ -47,6 +48,7 @@ namespace TaskAPI
                //S c.EnableAnnotations();
                 //c.OperationFilter<TagByApiExplorerSettingsOperationFilter>();
             });
+            services.AddScoped<ITaskRepo, TaskRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

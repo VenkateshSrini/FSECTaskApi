@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7F28DF2F-5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskAPI", "src\TaskAPI\TaskAPI.csproj", "{67E20310-147D-4AAE-A45F-A13EFC225354}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskApi.Unit.Test", "test\TaskApi.Unit.Test\TaskApi.Unit.Test.csproj", "{7BFFFDB0-937F-4A7F-ACF6-2CF826832AFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskApi.Unit.Test", "test\TaskApi.Unit.Test\TaskApi.Unit.Test.csproj", "{7BFFFDB0-937F-4A7F-ACF6-2CF826832AFD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLScripts", "SQLScripts", "{896CFFCF-2E80-4CF2-8290-0752171133C4}"
 	ProjectSection(SolutionItems) = preProject

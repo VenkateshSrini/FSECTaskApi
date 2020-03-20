@@ -34,7 +34,8 @@ namespace TaskAPI.Repository
             if (searchMsg.ToDate > DateTime.MinValue)
                 criteriaPredicate = criteriaPredicate.And(tsk => tsk.EndDate == searchMsg.ToDate);
 
-            return taskContext.Tasks.Where(criteriaPredicate.Compile()).ToList();
+            return taskContext.Tasks.Include(tsk=>tsk.ParentTask)
+                    .Where(criteriaPredicate.Compile()).ToList();
 
         }
 
@@ -52,7 +53,49 @@ namespace TaskAPI.Repository
             if (searchMsg.ToDate > DateTime.MinValue)
                 criteriaPredicate = criteriaPredicate.Or(tsk => tsk.EndDate == searchMsg.ToDate);
 
-            return taskContext.Tasks.Where(criteriaPredicate.Compile()).ToList();
+            return taskContext.Tasks.Include(tsk=>tsk.ParentTask)
+                    .Where(criteriaPredicate.Compile()).ToList();
+        }
+        public async Task<bool> AddTask(Tasks tasks)
+        {
+            _ = await manageParentTask(tasks);
+             taskContext.Tasks.Add(tasks);
+            var rowsAffected = await taskContext.SaveChangesAsync();
+            return (rowsAffected > 0) ? true : false;
+
+        }
+        public async Task<bool> EditTask(Tasks tasks)
+        {
+            var oldTask = await taskContext.Tasks.Include(tsk => tsk.ParentTask)
+                                                .FirstOrDefaultAsync(tsk => (tsk.TaskId == tasks.TaskId));
+            if (oldTask == default)
+                throw new ApplicationException("Task not found");
+            if ((oldTask.ParentTask!=null) && (oldTask.ParentTask.Parent_Task==tasks.TaskId))
+                _ = await manageParentTask(tasks);
+            taskContext.Update<Tasks>(tasks);
+            var rowsAffected = await taskContext.SaveChangesAsync();
+            return (rowsAffected>0) ?true:false;
+
+
+        }
+        private async Task<Tasks> manageParentTask(Tasks task)
+        {
+          
+            if ((task.ParentTask!=null) && (task.ParentTask.Parent_Task > 0))
+            {
+                ParentTask parentTask = await taskContext.ParentTasks.FirstOrDefaultAsync(parTsk =>
+                                                            parTsk.Parent_Task == task.ParentTaskId);
+                if (parentTask==default)
+                {
+                    parentTask = new ParentTask { Parent_Task = task.ParentTaskId };
+                     taskContext.ParentTasks.Add(parentTask);
+                    await taskContext.SaveChangesAsync();
+
+                }
+                task.ParentTaskId = parentTask.Parent_ID;
+                task.ParentTask = parentTask;
+            }
+            return task;
         }
     }
 }
