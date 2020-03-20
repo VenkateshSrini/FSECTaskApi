@@ -97,5 +97,10 @@ namespace TaskAPI.Repository
             }
             return task;
         }
+
+        public async Task<List<ParentTask>> GetAllParentTasks()
+        {
+            return await taskContext.ParentTasks.ToListAsync();
+        }
     }
 }
