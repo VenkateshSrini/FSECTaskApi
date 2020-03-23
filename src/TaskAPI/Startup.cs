@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using TaskAPI.DomainModel;
+using TaskAPI.DomainService;
 using TaskAPI.Repository;
 
 namespace TaskAPI
@@ -50,6 +51,7 @@ namespace TaskAPI
                 //c.OperationFilter<TagByApiExplorerSettingsOperationFilter>();
             });
             services.AddScoped<ITaskRepo, TaskRepo>();
+            services.AddScoped<ITaskService, TasksService>();
             services.AddAutoMapper(typeof(Startup));
         }
 

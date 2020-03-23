@@ -21,6 +21,8 @@ namespace TaskAPI.DomainService.MapProfile
                   options.MapFrom(src => src.StartDate))
                 .ForMember(dest => dest.EndDate, options =>
                   options.MapFrom(src => src.EndDate))
+                .ForMember(dest=>dest.TaskId, options=>
+                    options.MapFrom(src=>src.TaskId))
                 .ReverseMap();
             CreateMap<ParentTask, TaskAdd>()
                 .ForMember(dest => dest.ParentTaskId, options =>
@@ -58,6 +60,14 @@ namespace TaskAPI.DomainService.MapProfile
                 .ForMember(dest => dest.ParentTaskId, options =>
                 options.MapFrom(src => src.Parent_Task))
                 .ForMember(dest => dest.ParentDescription, options =>
+                  options.MapFrom(src => src.ParentTaskDescription))
+                .ReverseMap();
+            CreateMap<ParentTask, ParentTaskMsg>()
+                .ForMember(dest => dest.Parent_ID, options =>
+                  options.MapFrom(src => src.Parent_ID))
+                .ForMember(dest => dest.ParentTask_ID, options =>
+                  options.MapFrom(src => src.Parent_Task))
+                .ForMember(dest => dest.Parent_Task_Description, options =>
                   options.MapFrom(src => src.ParentTaskDescription))
                 .ReverseMap();
 

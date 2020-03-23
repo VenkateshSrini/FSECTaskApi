@@ -8,11 +8,12 @@ namespace TaskAPI.Messages
 {
     public class TaskAdd
     {
-       [Required]
+        public int TaskId { get; set; }
+        [Required]
        [StringLength(40,ErrorMessage ="Maxlength exceeded")]
         public string TaskDescription { get; set; }
-        [Range(0,30,ErrorMessage ="Min/Max value exceeded")]
-        public int Priority { get; set; }
+        [Range(0, 30, ErrorMessage = "Min/Max value exceeded")]
+        public int Priority { get; set; } = -1;
         public int ParentTaskId { get; set; }
         [Required]
         public DateTime StartDate { get; set; }
