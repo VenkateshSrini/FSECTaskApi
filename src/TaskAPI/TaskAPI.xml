@@ -4,5 +4,33 @@
         <name>TaskAPI</name>
     </assembly>
     <members>
+        <member name="M:TaskAPI.Controllers.TaskController.GetTaskAllCriteria(TaskAPI.Messages.SearchMsg)">
+            <summary>
+            Gets all the task that matches the search criteria
+            </summary>
+            <param name="searchMsg"> criteria for which the details needs to be fetched</param>
+            <returns>List of tasks</returns>
+        </member>
+        <member name="M:TaskAPI.Controllers.TaskController.GetTaskAnyCriteria(TaskAPI.Messages.SearchMsg)">
+            <summary>
+            Get task that match any search criteria
+            </summary>
+            <param name="searchMsg">search parameters</param>
+            <returns>List of task</returns>
+        </member>
+        <member name="M:TaskAPI.Controllers.TaskController.Post(TaskAPI.Messages.TaskAdd)">
+            <summary>
+            Add task with given details
+            </summary>
+            <param name="taskAdd">Parameters to add task</param>
+            <returns>state of operation</returns>
+        </member>
+        <member name="M:TaskAPI.Controllers.TaskController.Put(TaskAPI.Messages.TaskMod)">
+            <summary>
+            Modifies the 
+            </summary>
+            <param name="taskMod"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

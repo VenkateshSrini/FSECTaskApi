@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskAPI.DomainModel;
@@ -8,6 +9,7 @@ using TaskAPI.Messages;
 
 namespace TaskAPI.DomainService.MapProfile
 {
+    [ExcludeFromCodeCoverage]
     public class TaskMapProfile:Profile
     {
         public TaskMapProfile()
