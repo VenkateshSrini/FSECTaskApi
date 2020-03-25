@@ -9,6 +9,6 @@ namespace TaskAPI.Messages
     {
         public int Parent_ID { get; set; }
         public int ParentTask_ID { get; set; }
-        public int Parent_Task_Description { get; set; }
+        public string Parent_Task_Description { get; set; }
     }
 }
