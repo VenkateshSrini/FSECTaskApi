@@ -27,7 +27,8 @@ namespace TaskAPI.Controllers
         /// </summary>
         /// <param name="searchMsg"> criteria for which the details needs to be fetched</param>
         /// <returns>List of tasks</returns>
-        [HttpGet(Name ="GetTaskAllCriteria")]
+        [HttpGet]
+        [Route("GetTaskAllCriteria")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<TaskListing>> GetTaskAllCriteria([FromBody] SearchMsg searchMsg)
@@ -44,7 +45,8 @@ namespace TaskAPI.Controllers
         /// </summary>
         /// <param name="searchMsg">search parameters</param>
         /// <returns>List of task</returns>
-        [HttpGet(Name = "GetTaskAnyCriteria")]
+        [HttpGet]
+        [Route("GetTaskAnyCriteria")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<TaskListing>> GetTaskAnyCriteria([FromBody] SearchMsg searchMsg)
@@ -56,9 +58,22 @@ namespace TaskAPI.Controllers
                 return Ok(taskListings);
 
         }
-
-        
-
+        /// <summary>
+        /// Get all the parent task
+        /// </summary>
+        /// <returns>returns all the parent Tak</returns>
+        [HttpGet]
+        [Route("GetAllParentTask")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<ParentTaskMsg>>>GetAllParent()
+        {
+            var parentTask = await taskService.GetAllParentTask();
+            if (parentTask == default)
+                return NotFound("No task found");
+            else
+                return Ok(parentTask);
+        }
         // POST: api/Task
         /// <summary>
         /// Add task with given details
@@ -86,13 +101,10 @@ namespace TaskAPI.Controllers
                 return Created($"api/Task/{taskAdd.TaskId}", result);
             else
                 return StatusCode(500, "Unable to create task");
-
-            
-
         }
 
         /// <summary>
-        /// Modifies the 
+        /// Modifies the Task
         /// </summary>
         /// <param name="taskMod"></param>
         /// <returns></returns>
@@ -117,7 +129,36 @@ namespace TaskAPI.Controllers
             else
                 return StatusCode(500, "Modification failed");
         }
+        /// <summary>
+        /// Ends a task
+        /// </summary>
+        /// <param name="taskID">Task that needs to ended</param>
+        /// <returns> Success or failure in ending the task</returns>
+        [HttpPut]
+        [Route("EndTask")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        public async Task<ActionResult<bool>>EndTask(int taskID)
+        {
+            if (taskID<=0)
+            {
+                ModelState.AddModelError("ParameterEmpty", "InvalidTask ID");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await taskService.EndTask(taskID);
+                if (result)
+                    return Accepted(result);
+                else
+                    return StatusCode(500, "Modification failed");
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
-       
     }
 }

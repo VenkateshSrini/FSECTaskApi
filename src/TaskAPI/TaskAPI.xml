@@ -18,6 +18,12 @@
             <param name="searchMsg">search parameters</param>
             <returns>List of task</returns>
         </member>
+        <member name="M:TaskAPI.Controllers.TaskController.GetAllParent">
+            <summary>
+            Get all the parent task
+            </summary>
+            <returns>returns all the parent Tak</returns>
+        </member>
         <member name="M:TaskAPI.Controllers.TaskController.Post(TaskAPI.Messages.TaskAdd)">
             <summary>
             Add task with given details
@@ -27,10 +33,17 @@
         </member>
         <member name="M:TaskAPI.Controllers.TaskController.Put(TaskAPI.Messages.TaskMod)">
             <summary>
-            Modifies the 
+            Modifies the Task
             </summary>
             <param name="taskMod"></param>
             <returns></returns>
+        </member>
+        <member name="M:TaskAPI.Controllers.TaskController.EndTask(System.Int32)">
+            <summary>
+            Ends a task
+            </summary>
+            <param name="taskID">Task that needs to ended</param>
+            <returns> Success or failure in ending the task</returns>
         </member>
     </members>
 </doc>

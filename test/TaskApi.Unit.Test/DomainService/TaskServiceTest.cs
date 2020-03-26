@@ -160,7 +160,7 @@ namespace TaskApi.Unit.Test.DomainService
         }
         [Theory]
         [InlineData(-1, -1, 1, "3/24/2020", "3/25/2020")]
-        public void TestGetAnyTaskTest(int taskId, int parentTaskId, int priority, string strStartDate, string strEndDate)
+        public void GetAnyTaskTest(int taskId, int parentTaskId, int priority, string strStartDate, string strEndDate)
         {
             var startDate = DateTime.Parse(strStartDate);
             var endDate = DateTime.Parse(strEndDate);
@@ -207,6 +207,36 @@ namespace TaskApi.Unit.Test.DomainService
             var result = taskService.GetTaskMatchAny(searchMsg);
             Assert.Single(result);
 
+        }
+        [Theory]
+        [InlineData(1, 1, 1, "3/24/2020", "3/25/2020")]
+        public async Task EndTaskTest(int taskId, int parentTaskId, int priority, string strStartDate, string strEndDate)
+        {
+            var startDate = DateTime.Parse(strStartDate);
+            var endDate = DateTime.Parse(strEndDate);
+            var tasks = new List<Tasks> { new Tasks {
+                EndDate = endDate,
+                ParentTaskId=parentTaskId,
+                Priortiy=priority,
+                StartDate=startDate,
+                Status=1,
+                TaskDeatails="Task1",
+                TaskId=taskId,
+                ParentTask = new ParentTask
+                {
+                    ParentTaskDescription="ParentTask",
+                    Parent_ID=1,
+                    Parent_Task=1,
+
+                }
+            } };
+            var mockMapper = new Mock<IMapper>();
+            var mockTaskRepo = new Mock<ITaskRepo>();
+            mockTaskRepo.Setup(repo => repo.GetTaskForAnyCriteria(It.IsAny<SearchMsg>())).Returns(tasks);
+            mockTaskRepo.Setup(repo => repo.EditTask(It.IsAny<Tasks>())).Returns(Task.FromResult(true));
+            var taskService = new TasksService(mockMapper.Object, mockTaskRepo.Object, logger);
+            var result = await taskService.EndTask(taskId);
+            Assert.True(result);
         }
     }
 }

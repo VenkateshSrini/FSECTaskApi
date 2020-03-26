@@ -66,5 +66,15 @@ namespace TaskAPI.DomainService
             }
             return false;
         }
+        public async Task<bool> EndTask(int taskId)
+        {
+            var searchMsg = new SearchMsg { TaskId = taskId };
+            var tasks = taskRepo.GetTaskForAnyCriteria(searchMsg)?.FirstOrDefault();
+            if (tasks == default)
+                throw new ApplicationException("Task Not found");
+            tasks.Status = -1;
+
+            return await taskRepo.EditTask(tasks);
+        }
     }
 }
