@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,13 @@ namespace TaskAPI
             services.AddScoped<ITaskRepo, TaskRepo>();
             services.AddScoped<ITaskService, TasksService>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddCors(corsOption => corsOption.AddPolicy("ReactPolicy",builder=>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+                builder.AllowCredentials();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,7 +83,7 @@ namespace TaskAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("ReactPolicy");
             app.UseRouting();
 
             app.UseAuthorization();

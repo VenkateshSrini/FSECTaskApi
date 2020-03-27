@@ -87,7 +87,7 @@ namespace TaskAPI.Repository
                                                             parTsk.Parent_Task == task.ParentTaskId);
                 if (parentTask==default)
                 {
-                    parentTask = new ParentTask { Parent_Task = task.ParentTaskId };
+                    parentTask = new ParentTask { Parent_Task = task.ParentTaskId, ParentTaskDescription=task.TaskDeatails };
                      taskContext.ParentTasks.Add(parentTask);
                     await taskContext.SaveChangesAsync();
 
