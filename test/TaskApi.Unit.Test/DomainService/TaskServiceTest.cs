@@ -230,6 +230,7 @@ namespace TaskApi.Unit.Test.DomainService
 
                 }
             } };
+           
             var mockMapper = new Mock<IMapper>();
             var mockTaskRepo = new Mock<ITaskRepo>();
             mockTaskRepo.Setup(repo => repo.GetTaskForAnyCriteria(It.IsAny<SearchMsg>())).Returns(tasks);

@@ -73,8 +73,11 @@ namespace TaskAPI.DomainService
         {
             var searchMsg = new SearchMsg { TaskId = taskId };
             var tasks = taskRepo.GetTaskForAnyCriteria(searchMsg)?.FirstOrDefault();
+
             if (tasks == default)
                 throw new ApplicationException("Task Not found");
+
+            
             tasks.Status = -1;
 
             return await taskRepo.EditTask(tasks);
