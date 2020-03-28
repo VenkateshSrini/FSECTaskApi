@@ -14,9 +14,11 @@ namespace TaskAPI.DomainModel
         [Column("parent_id", TypeName = "integer") ]
         public int Parent_ID { get; set; }
         [Column("parent_task", TypeName = "int")]
+      
         public int Parent_Task { get; set; }
         [Column("parent_task_details", TypeName ="varchar(40)")]
         public string ParentTaskDescription { get; set; }
+        [ForeignKey("Parent_Task")]
         public List<Tasks> Tasks { get; set; }
     }
 }

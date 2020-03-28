@@ -29,7 +29,10 @@ namespace TaskAPI.DomainService
             if (Validator.TryValidateObject(taskAdd, validationContext, validationResults))
             {
                 var tasks = mapper.Map<Tasks>(taskAdd);
-                return await taskRepo.AddTask(tasks);
+                
+                var result = await taskRepo.AddTask(tasks);
+                taskAdd.TaskId = tasks.TaskId;
+                return result;
             }
             return false;
         }

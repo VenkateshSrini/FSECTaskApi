@@ -25,7 +25,7 @@ namespace TaskAPI.DomainModel
         public int Priortiy { get; set; }
         [Column("status", TypeName ="int")]
         public int Status { get; set; }
-        [ForeignKey("ParentTaskId")]
+        
         public ParentTask ParentTask { get; set; }
     }
 }
