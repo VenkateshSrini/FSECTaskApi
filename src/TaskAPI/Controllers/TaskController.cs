@@ -31,8 +31,18 @@ namespace TaskAPI.Controllers
         [Route("GetTaskAllCriteria")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<TaskListing>> GetTaskAllCriteria([FromBody] SearchMsg searchMsg)
+        public ActionResult<List<TaskListing>> GetTaskAllCriteria(int taskId, int parentTaskId,
+            int priority, string startDate, string endDate)
         {
+            var searchMsg = new SearchMsg
+            {
+                TaskId = taskId,
+                FromDate = (string.IsNullOrWhiteSpace(startDate)) ? DateTime.MinValue : DateTime.Parse(startDate),
+                ToDate = (string.IsNullOrWhiteSpace(endDate)) ? DateTime.MinValue : DateTime.Parse(endDate),
+                ParentTaskId = parentTaskId,
+                Priority = priority
+
+            };
             var taskListings = taskService.GetTaskMatchAll(searchMsg);
             if (taskListings == default)
                 return NotFound("No task found");
@@ -49,8 +59,18 @@ namespace TaskAPI.Controllers
         [Route("GetTaskAnyCriteria")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<TaskListing>> GetTaskAnyCriteria([FromBody] SearchMsg searchMsg)
+        public ActionResult<List<TaskListing>> GetTaskAnyCriteria(int taskId, int parentTaskId, 
+            int priority, string startDate, string endDate)
         {
+            var searchMsg = new SearchMsg
+            {
+                TaskId = taskId,
+                FromDate = (string.IsNullOrWhiteSpace(startDate))?DateTime.MinValue:DateTime.Parse(startDate),
+                ToDate = (string.IsNullOrWhiteSpace(endDate))? DateTime.MinValue:DateTime.Parse(endDate),
+                ParentTaskId = parentTaskId,
+                Priority = priority
+
+            };
             var taskListings = taskService.GetTaskMatchAny(searchMsg);
             if (taskListings == default)
                 return NotFound("No task found");

@@ -23,11 +23,18 @@ namespace TaskAPI.Repository
         public List<Tasks> GetTaskForAllCriteria(SearchMsg searchMsg)
         {
             var criteriaPredicate = PredicateBuilder.New<Tasks>(true);
-            if (searchMsg.TaskId > -1)
+            if (searchMsg.TaskId > 0)
                 criteriaPredicate = criteriaPredicate.And(tsk => tsk.TaskId == searchMsg.TaskId);
-            if (searchMsg.ParentTaskId > -1)
-                criteriaPredicate = criteriaPredicate.And(tsk => tsk.ParentTaskId == searchMsg.ParentTaskId);
-            if (searchMsg.Priority > -1)
+            if (searchMsg.ParentTaskId > 0)
+            {
+                var parentTask = taskContext.ParentTasks.AsNoTracking().FirstOrDefault(
+                   partask => partask.Parent_Task == searchMsg.ParentTaskId);
+                var parentId = (parentTask != default) ? parentTask.Parent_ID : 0;
+
+                criteriaPredicate = criteriaPredicate.And(tsk => tsk.ParentTaskId == parentId);
+            }
+                
+            if (searchMsg.Priority > 0)
                 criteriaPredicate = criteriaPredicate.And(tsk => tsk.Priortiy == searchMsg.Priority);
             if (searchMsg.FromDate > DateTime.MinValue)
                 criteriaPredicate = criteriaPredicate.And(tsk => tsk.StartDate == searchMsg.FromDate);
@@ -54,11 +61,18 @@ namespace TaskAPI.Repository
         public List<Tasks> GetTaskForAnyCriteria(SearchMsg searchMsg)
         {
             var criteriaPredicate = PredicateBuilder.New<Tasks>(false);
-            if (searchMsg.TaskId > -1)
+            if (searchMsg.TaskId > 0)
                 criteriaPredicate = criteriaPredicate.Or(tsk => tsk.TaskId == searchMsg.TaskId);
-            if (searchMsg.ParentTaskId > -1)
-                criteriaPredicate = criteriaPredicate.Or(tsk => tsk.ParentTaskId == searchMsg.ParentTaskId);
-            if (searchMsg.Priority > -1)
+            if (searchMsg.ParentTaskId > 0)
+            {
+                var parentTask = taskContext.ParentTasks.AsNoTracking().FirstOrDefault(
+                    partask => partask.Parent_Task == searchMsg.ParentTaskId);
+                var parentId = (parentTask != default) ? parentTask.Parent_ID : 0;
+
+                criteriaPredicate = criteriaPredicate.Or(tsk => tsk.ParentTaskId== parentId);
+            }
+                
+            if (searchMsg.Priority > 0)
                 criteriaPredicate = criteriaPredicate.Or(tsk => tsk.Priortiy == searchMsg.Priority);
             if (searchMsg.FromDate > DateTime.MinValue)
                 criteriaPredicate = criteriaPredicate.Or(tsk => tsk.StartDate == searchMsg.FromDate);
@@ -92,7 +106,9 @@ namespace TaskAPI.Repository
         }
         public async Task<bool> EditTask(Tasks tasks)
         {
-            
+            if ((tasks.ParentTask != default) && (tasks.ParentTask.Parent_Task == 0))
+                tasks.ParentTask = null;
+
             var oldTaskQuery = from taskEntity in taskContext.Tasks.Where(tsk=>tsk.TaskId==tasks.TaskId)
                                from parTaskEntity in taskContext.ParentTasks.Where(partask =>
                                partask.Parent_ID == taskEntity.ParentTaskId).DefaultIfEmpty()
@@ -112,14 +128,35 @@ namespace TaskAPI.Repository
             if (oldTask == default)
                 throw new ApplicationException("Task not found");
             if (((oldTask.ParentTask!=null) && (oldTask.ParentTask.Parent_ID!=tasks.ParentTaskId))||
-                ((oldTask.ParentTask==default) && (tasks.ParentTask.Parent_Task>0)))
+                ((oldTask.ParentTask==default) && (tasks.ParentTask!=default)&& (tasks.ParentTask.Parent_Task>0)))
                 _ = await manageParentTask(tasks);
             
             
             taskContext.Update<Tasks>(tasks);
             var rowsAffected = await taskContext.SaveChangesAsync();
-            return (rowsAffected>0) ?true:false;
 
+            bool combinedResult =  (rowsAffected>0) ?true:false;
+            bool parentUpdateResult = await UpdateParentTakDetails(tasks);
+            if ((combinedResult) && (parentUpdateResult))
+                return true;
+            else
+                return false;
+
+
+        }
+        private async Task<bool> UpdateParentTakDetails(Tasks task)
+        {
+            var parentTask = await taskContext.ParentTasks.FirstOrDefaultAsync(parTsk =>
+                                                            parTsk.Parent_Task == task.ParentTaskId);
+            if ((parentTask!= default) && 
+                (parentTask.ParentTaskDescription.CompareTo(task.TaskDeatails)!=0))
+            {
+                parentTask.ParentTaskDescription = task.TaskDeatails;
+                taskContext.Update(parentTask);
+                var recordsAffected = await taskContext.SaveChangesAsync();
+                return (recordsAffected > 0) ? true : false;
+            }
+            return true;
 
         }
         private void assignProperties(Tasks oldTask, Tasks newTasks)
@@ -143,15 +180,26 @@ namespace TaskAPI.Repository
                                                             parTsk.Parent_Task == task.ParentTaskId);
                 if (parentTask == default)
                 {
-                    parentTask = new ParentTask { Parent_Task = task.ParentTaskId, ParentTaskDescription = task.TaskDeatails };
+                    var parTaskFromTaskEntity = taskContext.Tasks.AsNoTracking()
+                        .FirstOrDefault(tsk => tsk.TaskId == task.ParentTaskId);
+                    parentTask = new ParentTask { Parent_Task = parTaskFromTaskEntity.TaskId, 
+                    ParentTaskDescription = parTaskFromTaskEntity.TaskDeatails
+                    };
                     taskContext.ParentTasks.Add(parentTask);
                     await taskContext.SaveChangesAsync();
 
                 }
+                else
+                {
+                    taskContext.Update(parentTask);
+                    await taskContext.SaveChangesAsync();
+
+                }
+                
                 task.ParentTaskId = parentTask.Parent_ID;
                 task.ParentTask = parentTask;
             }
-            else if (task.ParentTask.Parent_Task == 0)
+            else 
                 task.ParentTask = null;
 
             return task;

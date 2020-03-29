@@ -4,14 +4,14 @@
         <name>TaskAPI</name>
     </assembly>
     <members>
-        <member name="M:TaskAPI.Controllers.TaskController.GetTaskAllCriteria(TaskAPI.Messages.SearchMsg)">
+        <member name="M:TaskAPI.Controllers.TaskController.GetTaskAllCriteria(System.Int32,System.Int32,System.Int32,System.String,System.String)">
             <summary>
             Gets all the task that matches the search criteria
             </summary>
             <param name="searchMsg"> criteria for which the details needs to be fetched</param>
             <returns>List of tasks</returns>
         </member>
-        <member name="M:TaskAPI.Controllers.TaskController.GetTaskAnyCriteria(TaskAPI.Messages.SearchMsg)">
+        <member name="M:TaskAPI.Controllers.TaskController.GetTaskAnyCriteria(System.Int32,System.Int32,System.Int32,System.String,System.String)">
             <summary>
             Get task that match any search criteria
             </summary>
