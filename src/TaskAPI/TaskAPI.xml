@@ -45,5 +45,11 @@
             <param name="taskID">Task that needs to ended</param>
             <returns> Success or failure in ending the task</returns>
         </member>
+        <member name="M:TaskAPI.Controllers.TaskController.GetAllTasks">
+            <summary>
+            Get all task 
+            </summary>
+            <returns>Lsit of task</returns>
+        </member>
     </members>
 </doc>

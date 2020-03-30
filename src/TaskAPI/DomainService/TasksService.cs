@@ -82,5 +82,20 @@ namespace TaskAPI.DomainService
 
             return await taskRepo.EditTask(tasks);
         }
+
+        public List<TaskListing> GetAllTask()
+        {
+            var searchMsg = new SearchMsg
+            {
+                FromDate = DateTime.MinValue,
+                ParentTaskId = 0,
+                Priority = 0,
+                TaskId = 0,
+                ToDate = DateTime.MinValue
+            };
+            var tasks = taskRepo.GetAllTasks();
+            var taskListings = mapper.Map<List<TaskListing>>(tasks);
+            return taskListings;
+        }
     }
 }

@@ -179,6 +179,22 @@ namespace TaskAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        /// <summary>
+        /// Get all task 
+        /// </summary>
+        /// <returns>Lsit of task</returns>
+        [HttpGet]
+        [Route("GetAllTasks")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<List<TaskListing>> GetAllTasks()
+        {
+            var taskListings = taskService.GetAllTask();
+            if (taskListings == default)
+                return NotFound("No task found");
+            else
+                return Ok(taskListings);
+        }
 
     }
 }

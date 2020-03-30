@@ -13,6 +13,7 @@ namespace TaskAPI.DomainService
 
         List<TaskListing> GetTaskMatchAll(SearchMsg searchMsg);
         List<TaskListing> GetTaskMatchAny(SearchMsg searchMsg);
+        List<TaskListing> GetAllTask();
         Task<List<ParentTaskMsg>> GetAllParentTask();
         Task<bool> EndTask(int taskId);
 

@@ -80,7 +80,7 @@ namespace TaskAPI.Repository
                 criteriaPredicate = criteriaPredicate.Or(tsk => tsk.EndDate == searchMsg.ToDate);
             var anyTaskQuery = from taskEntity in taskContext.Tasks.Where(criteriaPredicate.Compile())
                                select taskEntity ;
-                              
+            
             var tasks = anyTaskQuery.ToList();
             tasks.ForEach(task =>
             {
@@ -208,6 +208,24 @@ namespace TaskAPI.Repository
         public async Task<List<ParentTask>> GetAllParentTasks()
         {
             return await taskContext.ParentTasks.ToListAsync();
+        }
+
+        public List<Tasks> GetAllTasks()
+        {
+            var taskQuery = from taskEntity in taskContext.Tasks
+                           from parTaskEntity in taskContext.ParentTasks.Where(partask =>
+                           partask.Parent_ID == taskEntity.ParentTaskId).DefaultIfEmpty()
+                           select new { taskEntity, parTaskEntity };
+            var taskValueObj = taskQuery.ToList();
+            var tasks = taskValueObj.Select(valueObj =>
+            {
+                if (valueObj.parTaskEntity != null)
+                {
+                    valueObj.taskEntity.ParentTask = valueObj.parTaskEntity;
+                }
+                return valueObj.taskEntity;
+            }).ToList();
+            return tasks;
         }
     }
 }
