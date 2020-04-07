@@ -33,13 +33,18 @@ namespace TaskAPI.Repository
 
                 criteriaPredicate = criteriaPredicate.And(tsk => tsk.ParentTaskId == parentId);
             }
-                
-            if (searchMsg.Priority > 0)
-                criteriaPredicate = criteriaPredicate.And(tsk => tsk.Priortiy == searchMsg.Priority);
+
+            if (searchMsg.PriorityFrom > 0)
+                criteriaPredicate = criteriaPredicate.Or(tsk => tsk.Priortiy >= searchMsg.PriorityFrom);
+            if (searchMsg.PriorityTo > 0)
+                criteriaPredicate = criteriaPredicate.Or(tsk => tsk.Priortiy <= searchMsg.PriorityTo);
             if (searchMsg.FromDate > DateTime.MinValue)
                 criteriaPredicate = criteriaPredicate.And(tsk => tsk.StartDate == searchMsg.FromDate);
             if (searchMsg.ToDate > DateTime.MinValue)
                 criteriaPredicate = criteriaPredicate.And(tsk => tsk.EndDate == searchMsg.ToDate);
+            if (!string.IsNullOrWhiteSpace(searchMsg.TaskDescription))
+                criteriaPredicate = criteriaPredicate.And(tsk =>
+                tsk.TaskDeatails.CompareTo(searchMsg.TaskDescription) == 0);
 
             var anyTaskQuery = from taskEntity in taskContext.Tasks.Where(criteriaPredicate.Compile())
                                select taskEntity;
@@ -63,6 +68,9 @@ namespace TaskAPI.Repository
             var criteriaPredicate = PredicateBuilder.New<Tasks>(false);
             if (searchMsg.TaskId > 0)
                 criteriaPredicate = criteriaPredicate.Or(tsk => tsk.TaskId == searchMsg.TaskId);
+            if (!string.IsNullOrWhiteSpace(searchMsg.TaskDescription))
+                criteriaPredicate = criteriaPredicate.Or(tsk =>
+                tsk.TaskDeatails.CompareTo(searchMsg.TaskDescription) == 0);
             if (searchMsg.ParentTaskId > 0)
             {
                 var parentTask = taskContext.ParentTasks.AsNoTracking().FirstOrDefault(
@@ -72,8 +80,10 @@ namespace TaskAPI.Repository
                 criteriaPredicate = criteriaPredicate.Or(tsk => tsk.ParentTaskId== parentId);
             }
                 
-            if (searchMsg.Priority > 0)
-                criteriaPredicate = criteriaPredicate.Or(tsk => tsk.Priortiy == searchMsg.Priority);
+            if (searchMsg.PriorityFrom > 0)
+                criteriaPredicate = criteriaPredicate.Or(tsk => tsk.Priortiy >= searchMsg.PriorityFrom);
+            if (searchMsg.PriorityTo > 0)
+                criteriaPredicate = criteriaPredicate.Or(tsk => tsk.Priortiy <= searchMsg.PriorityTo);
             if (searchMsg.FromDate > DateTime.MinValue)
                 criteriaPredicate = criteriaPredicate.Or(tsk => tsk.StartDate == searchMsg.FromDate);
             if (searchMsg.ToDate > DateTime.MinValue)

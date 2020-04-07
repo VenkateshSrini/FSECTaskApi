@@ -31,16 +31,17 @@ namespace TaskAPI.Controllers
         [Route("GetTaskAllCriteria")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<TaskListing>> GetTaskAllCriteria(int taskId, int parentTaskId,
-            int priority, string startDate, string endDate)
+        public ActionResult<List<TaskListing>> GetTaskAllCriteria(int tId, string desc, int pId,
+            int prtyFrm, int prtyTo, string sDt, string eDt)
         {
             var searchMsg = new SearchMsg
             {
-                TaskId = taskId,
-                FromDate = (string.IsNullOrWhiteSpace(startDate)) ? DateTime.MinValue : DateTime.Parse(startDate),
-                ToDate = (string.IsNullOrWhiteSpace(endDate)) ? DateTime.MinValue : DateTime.Parse(endDate),
-                ParentTaskId = parentTaskId,
-                Priority = priority
+                TaskId = tId,
+                FromDate = (string.IsNullOrWhiteSpace(sDt)) ? DateTime.MinValue : DateTime.Parse(sDt),
+                ToDate = (string.IsNullOrWhiteSpace(eDt)) ? DateTime.MinValue : DateTime.Parse(eDt),
+                ParentTaskId = pId,
+                PriorityFrom = prtyFrm,
+                PriorityTo = prtyTo
 
             };
             var taskListings = taskService.GetTaskMatchAll(searchMsg);
@@ -59,16 +60,18 @@ namespace TaskAPI.Controllers
         [Route("GetTaskAnyCriteria")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<TaskListing>> GetTaskAnyCriteria(int taskId, int parentTaskId, 
-            int priority, string startDate, string endDate)
+        public ActionResult<List<TaskListing>> GetTaskAnyCriteria(int tId,string desc, int pId, 
+            int prtyFrm, int prtyTo, string sDt, string eDt)
         {
             var searchMsg = new SearchMsg
             {
-                TaskId = taskId,
-                FromDate = (string.IsNullOrWhiteSpace(startDate))?DateTime.MinValue:DateTime.Parse(startDate),
-                ToDate = (string.IsNullOrWhiteSpace(endDate))? DateTime.MinValue:DateTime.Parse(endDate),
-                ParentTaskId = parentTaskId,
-                Priority = priority
+                TaskId = tId,
+                TaskDescription =desc,
+                FromDate = (string.IsNullOrWhiteSpace(sDt))?DateTime.MinValue:DateTime.Parse(sDt),
+                ToDate = (string.IsNullOrWhiteSpace(eDt))? DateTime.MinValue:DateTime.Parse(sDt),
+                ParentTaskId = pId,
+                PriorityFrom = prtyFrm,
+                PriorityTo = prtyTo
 
             };
             var taskListings = taskService.GetTaskMatchAny(searchMsg);

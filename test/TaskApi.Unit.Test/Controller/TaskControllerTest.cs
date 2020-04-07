@@ -97,14 +97,14 @@ namespace TaskApi.Unit.Test.Controller
                 FromDate = startDate,
                 ToDate = endDate,
                 ParentTaskId = parentTaskId,
-                Priority = priority
+                PriorityFrom = priority
 
             };
             var mockService = new Mock<ITaskService>();
             mockService.Setup(service => service.GetTaskMatchAny(It.IsAny<SearchMsg>()))
                        .Returns(taskListings);
             var controller = new TaskController(mockService.Object, logger);
-            var actionResult = controller.GetTaskAnyCriteria(taskId,parentTaskId,priority,strEndDate,strEndDate).Result as OkObjectResult;
+            var actionResult = controller.GetTaskAnyCriteria(taskId,"",parentTaskId,priority, priority,strEndDate, strEndDate).Result as OkObjectResult;
 
             Assert.NotNull(actionResult);
             Assert.Equal(200, actionResult.StatusCode);
@@ -135,14 +135,14 @@ namespace TaskApi.Unit.Test.Controller
                 FromDate = startDate,
                 ToDate = endDate,
                 ParentTaskId = parentTaskId,
-                Priority = priority
+                PriorityFrom = priority
 
             };
             var mockService = new Mock<ITaskService>();
             mockService.Setup(service => service.GetTaskMatchAll(It.IsAny<SearchMsg>()))
                        .Returns(taskListings);
             var controller = new TaskController(mockService.Object, logger);
-            var actionResult = controller.GetTaskAllCriteria(taskId,parentTaskId, priority, strStartDate, strEndDate).Result as OkObjectResult;
+            var actionResult = controller.GetTaskAllCriteria(taskId,"",parentTaskId, priority,priority, strStartDate, strEndDate).Result as OkObjectResult;
 
             Assert.NotNull(actionResult);
             Assert.Equal(200, actionResult.StatusCode);

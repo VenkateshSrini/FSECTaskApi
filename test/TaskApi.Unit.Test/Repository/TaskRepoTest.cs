@@ -66,7 +66,7 @@ namespace TaskApi.Unit.Test.Repository
                 FromDate = (!string.IsNullOrWhiteSpace(start)) ? DateTime.Parse(start) : DateTime.MinValue,
                 ToDate= (!string.IsNullOrWhiteSpace(end)) ? DateTime.Parse(end) : DateTime.MinValue,
                 ParentTaskId = parentTaskId,
-                Priority = priority,
+                PriorityFrom = priority,
                 TaskId = taskId
             };
             
@@ -128,7 +128,7 @@ namespace TaskApi.Unit.Test.Repository
                 FromDate = (!string.IsNullOrWhiteSpace(start)) ? DateTime.Parse(start) : DateTime.MinValue,
                 ToDate = (!string.IsNullOrWhiteSpace(end)) ? DateTime.Parse(end) : DateTime.MinValue,
                 ParentTaskId = parentTaskId,
-                Priority = priority,
+                PriorityFrom = priority,
                 TaskId = taskId
             };
 

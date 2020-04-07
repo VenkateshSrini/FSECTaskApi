@@ -145,7 +145,7 @@ namespace TaskApi.Unit.Test.DomainService
                 FromDate = startDate,
                 ToDate = endDate,
                 ParentTaskId = parentTaskId,
-                Priority = priority
+                PriorityFrom = priority
 
             };
             var mockMapper = new Mock<IMapper>();
@@ -195,7 +195,7 @@ namespace TaskApi.Unit.Test.DomainService
                 FromDate = startDate,
                 ToDate = endDate,
                 ParentTaskId = parentTaskId,
-                Priority = priority
+                PriorityFrom = priority
 
             };
             var mockMapper = new Mock<IMapper>();
