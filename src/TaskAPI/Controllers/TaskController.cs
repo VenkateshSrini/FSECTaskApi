@@ -25,7 +25,13 @@ namespace TaskAPI.Controllers
         /// <summary>
         /// Gets all the task that matches the search criteria
         /// </summary>
-        /// <param name="searchMsg"> criteria for which the details needs to be fetched</param>
+        /// <param name="tId">Task Id</param>
+        /// <param name="desc">Task description</param>
+        /// <param name="pId">Parent id</param>
+        /// <param name="prtyFrm">priority starting from</param>
+        /// <param name="prtyTo">maximum priority that should bein result</param>
+        /// <param name="sDt">start date</param>
+        /// <param name="eDt">End date</param>
         /// <returns>List of tasks</returns>
         [HttpGet]
         [Route("GetTaskAllCriteria")]
@@ -54,8 +60,15 @@ namespace TaskAPI.Controllers
         /// <summary>
         /// Get task that match any search criteria
         /// </summary>
-        /// <param name="searchMsg">search parameters</param>
-        /// <returns>List of task</returns>
+        /// <param name="tId">Task Id</param>
+        /// <param name="desc">Task description</param>
+        /// <param name="pId">Parent id</param>
+        /// <param name="prtyFrm">priority starting from</param>
+        /// <param name="prtyTo">maximum priority that should bein result</param>
+        /// <param name="sDt">start date</param>
+        /// <param name="eDt">End date</param>
+        /// <returns>List of tasks</returns>
+
         [HttpGet]
         [Route("GetTaskAnyCriteria")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -129,8 +142,8 @@ namespace TaskAPI.Controllers
         /// <summary>
         /// Modifies the Task
         /// </summary>
-        /// <param name="taskMod"></param>
-        /// <returns></returns>
+        /// <param name="taskMod">Task details that needs to be modified</param>
+        /// <returns>boolean value signifying the success of failure of update</returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -183,7 +196,7 @@ namespace TaskAPI.Controllers
             }
         }
         /// <summary>
-        /// Get all task 
+        /// Get all task that are not closed
         /// </summary>
         /// <returns>Lsit of task</returns>
         [HttpGet]
