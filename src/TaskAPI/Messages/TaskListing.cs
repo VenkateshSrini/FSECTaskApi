@@ -12,6 +12,7 @@ namespace TaskAPI.Messages
         public int ParentTaskId { get; set; }
         public string ParentDescription { get; set; }
         public int Priority { get; set; }
+        public int Status { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }

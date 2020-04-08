@@ -55,6 +55,8 @@ namespace TaskAPI.DomainService.MapProfile
                   options.MapFrom(src => src.StartDate))
                 .ForMember(dest => dest.EndDate, options =>
                   options.MapFrom(src => src.EndDate))
+                .ForMember(dest=>dest.Status, options=>
+                options.MapFrom(src=>src.Status))
                 .ForMember(dest=>dest.ParentTaskId, options=>
                 options.MapFrom(src=>src.ParentTask.Parent_Task))
                 .ForMember(dest => dest.ParentDescription, options =>
