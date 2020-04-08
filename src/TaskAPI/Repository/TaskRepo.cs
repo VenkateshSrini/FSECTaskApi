@@ -222,7 +222,7 @@ namespace TaskAPI.Repository
 
         public List<Tasks> GetAllTasks()
         {
-            var taskQuery = from taskEntity in taskContext.Tasks
+            var taskQuery = from taskEntity in taskContext.Tasks.Where(tsk=>tsk.Status>=0)
                            from parTaskEntity in taskContext.ParentTasks.Where(partask =>
                            partask.Parent_ID == taskEntity.ParentTaskId).DefaultIfEmpty()
                            select new { taskEntity, parTaskEntity };
