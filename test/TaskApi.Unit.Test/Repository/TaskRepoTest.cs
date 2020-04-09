@@ -17,13 +17,13 @@ namespace TaskApi.Unit.Test.Repository
 {
    public class TaskRepoTest
     {
-        [Theory(Skip = "Inline Linq cannot be mocked")]
-        [InlineData(2,-1,-1,"","",0)]
-        [InlineData(-1, 1, -1, "", "", 0)]
-        [InlineData(-1, -1, 1, "", "", 0)]
-        [InlineData(-1, -1, -1, "", "", 1)]
-        [InlineData(-1, -1, 1, "5/3/2019", "6/3/2019", 0)]
-        [InlineData(1, 1, 1, "5/3/2019", "6/3/2019", 0)]
+        //[Theory(Skip = "Inline Linq cannot be mocked")]
+        //[InlineData(2,-1,-1,"","",0)]
+        //[InlineData(-1, 1, -1, "", "", 0)]
+        //[InlineData(-1, -1, 1, "", "", 0)]
+        //[InlineData(-1, -1, -1, "", "", 1)]
+        //[InlineData(-1, -1, 1, "5/3/2019", "6/3/2019", 0)]
+        //[InlineData(1, 1, 1, "5/3/2019", "6/3/2019", 0)]
         public void GetTaskForAllCriteriaTest(int taskId, int parentTaskId, int priority, 
             string start, string end, int status)
         {
@@ -79,12 +79,12 @@ namespace TaskApi.Unit.Test.Repository
 
         }
 
-        [Theory (Skip ="Inline Linq cannot be mocked")]
-        [InlineData(2, -1, -1, "", "", 0)]
-        [InlineData(-1, 1, -1, "", "", 0)]
-        [InlineData(-1, -1, 1, "", "", 0)]
-        [InlineData(-1, -1, 1, "5/3/2019", "6/3/2019", 0)]
-        [InlineData(1, 1, 1, "5/3/2019", "6/3/2019", 0)]
+        //[Theory (Skip ="Inline Linq cannot be mocked")]
+        //[InlineData(2, -1, -1, "", "", 0)]
+        //[InlineData(-1, 1, -1, "", "", 0)]
+        //[InlineData(-1, -1, 1, "", "", 0)]
+        //[InlineData(-1, -1, 1, "5/3/2019", "6/3/2019", 0)]
+        //[InlineData(1, 1, 1, "5/3/2019", "6/3/2019", 0)]
         public void GetTaskForAnyCriteriaTest(int taskId, int parentTaskId, int priority,
             string start, string end, int status)
         {
@@ -141,8 +141,8 @@ namespace TaskApi.Unit.Test.Repository
 
         }
         
-        [Theory(Skip ="cannot moq extension method first or default")]
-        [InlineData(2, -1, -1, "", "", 0, "TestTask")]
+        //[Theory(Skip ="cannot moq extension method first or default")]
+        //[InlineData(2, -1, -1, "", "", 0, "TestTask")]
         public async Task AddTask(int taskId, int parentTaskId, int priority,
             string start, string end, int status, string taskDetails)
         {
