@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using TaskAPI.Converters;
 using TaskAPI.DomainModel;
 using TaskAPI.DomainService;
 using TaskAPI.Repository;
@@ -35,7 +36,11 @@ namespace TaskAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                                {
+                                    options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+                                });
             services.AddDbContext<TaskContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("TaskConnection")));
             services.AddSwaggerGen(c =>
