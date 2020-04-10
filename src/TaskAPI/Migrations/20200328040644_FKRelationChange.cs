@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TaskAPI.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class FKRelationChange : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

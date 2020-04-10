@@ -7,3 +7,4 @@
 /src/TaskAPI/obj
 /test/TaskApi.Unit.Test/bin/Debug/netcoreapp3.1
 /test/TaskApi.Unit.Test/obj
+/_codecoverage

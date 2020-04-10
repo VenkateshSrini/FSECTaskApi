@@ -16,6 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLScripts", "SQLScripts", 
 		src\TaskAPI\CreateScripts.SQL = src\TaskAPI\CreateScripts.SQL
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B99AD84-77C8-4AF6-B1CE-989D732D4D7C}"
+	ProjectSection(SolutionItems) = preProject
+		runCoverage.cmd = runCoverage.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

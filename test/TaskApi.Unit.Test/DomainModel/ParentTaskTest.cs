@@ -17,11 +17,13 @@ namespace TaskApi.Unit.Test.DomainModel
                 Tasks = new List<Tasks>
                 {
                     new Tasks{ TaskId=1}
-                }
+                },
+                ParentTaskDescription="task"
             };
             Assert.Equal(1, parentTask.Parent_Task);
             Assert.Equal(1, parentTask.Parent_ID);
             Assert.Single(parentTask.Tasks);
+            Assert.Equal("task", parentTask.ParentTaskDescription);
         }
     }
 }
