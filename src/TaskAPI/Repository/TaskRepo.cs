@@ -7,9 +7,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskAPI.DomainModel;
 using TaskAPI.Messages;
+using System.Diagnostics.CodeAnalysis;
+
+
 
 namespace TaskAPI.Repository
 {
+   
     public class TaskRepo:ITaskRepo
     {
         private TaskContext taskContext;
@@ -114,6 +118,8 @@ namespace TaskAPI.Repository
             return (rowsAffected > 0) ? true : false;
 
         }
+        
+        
         public async Task<bool> EditTask(Tasks tasks)
         {
             if ((tasks.ParentTask != default) && (tasks.ParentTask.Parent_Task == 0))
@@ -154,6 +160,8 @@ namespace TaskAPI.Repository
 
 
         }
+       
+        //heavy inline queries with anynomus objects
         private async Task<bool> UpdateParentTakDetails(Tasks task)
         {
             var parentTask = await taskContext.ParentTasks.FirstOrDefaultAsync(parTsk =>
@@ -169,18 +177,22 @@ namespace TaskAPI.Repository
             return true;
 
         }
-        private void assignProperties(Tasks oldTask, Tasks newTasks)
-        {
-            oldTask.ParentTaskId = newTasks.ParentTaskId;
-            oldTask.TaskId = newTasks.TaskId;
-            oldTask.Status = newTasks.Status;
-            oldTask.Priortiy = newTasks.Priortiy;
-            oldTask.TaskDeatails = newTasks.TaskDeatails;
-            oldTask.StartDate = newTasks.StartDate;
-            oldTask.EndDate = newTasks.EndDate;
+        //[ExcludeFromCodeCoverage]
+        //heavy inline queries with anynomus objects
+        //private void assignProperties(Tasks oldTask, Tasks newTasks)
+        //{
+        //    oldTask.ParentTaskId = newTasks.ParentTaskId;
+        //    oldTask.TaskId = newTasks.TaskId;
+        //    oldTask.Status = newTasks.Status;
+        //    oldTask.Priortiy = newTasks.Priortiy;
+        //    oldTask.TaskDeatails = newTasks.TaskDeatails;
+        //    oldTask.StartDate = newTasks.StartDate;
+        //    oldTask.EndDate = newTasks.EndDate;
            
 
-        }
+        //}
+    
+        //heavy inline queries with anynomus objects
         private async Task<Tasks> manageParentTask(Tasks task)
         {
 
@@ -219,7 +231,7 @@ namespace TaskAPI.Repository
         {
             return await taskContext.ParentTasks.ToListAsync();
         }
-
+        [ExcludeFromCodeCoverage]
         public List<Tasks> GetAllTasks()
         {
             var taskQuery = from taskEntity in taskContext.Tasks.Where(tsk=>tsk.Status>=0)
